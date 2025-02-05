@@ -1,9 +1,9 @@
 import os
 import sys
 from PySide6.QtWidgets import QApplication
-from PySide6.QtCore import Qt, QLocale, QTranslator
+from PySide6.QtCore import Qt, QTranslator
 from qfluentwidgets import FluentTranslator
-from src.app.main import Main
+from src.app.MainInterface import Main
 from src.util.config import cfg
 
 if cfg.get(cfg.dpiScale) != "Auto":

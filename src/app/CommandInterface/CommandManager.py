@@ -1,4 +1,4 @@
-from .command import *
+from .Cmds import *
 from src.util import *
 from src.head import *
 # from src.app.remote.common import handleCommandSend
@@ -161,8 +161,6 @@ class CommandManager(ScrollArea):
         InitUI.addSubInterface(self, self.CustomInterface, 'CustomInterface', self.tr('自定义'), icon=FluentIcon.COMMAND_PROMPT)
         self.SceneInterface = Scene('SceneInterface', self)
         InitUI.addSubInterface(self, self.SceneInterface, 'SceneInterface', self.tr('场景'), icon=FluentIcon.COMMAND_PROMPT)
-        self.SpawnInterface = Spawn('SpawnInterface', self)
-        InitUI.addSubInterface(self, self.SpawnInterface, 'SpawnInterface', self.tr('生成'), icon=FluentIcon.COMMAND_PROMPT)
         self.GiveInterface = Give('GiveInterface', self)
         InitUI.addSubInterface(self, self.GiveInterface, 'GiveInterface', self.tr('给予'), icon=FluentIcon.COMMAND_PROMPT)
         self.RelicInterface = Relic('RelicInterface', self)
@@ -223,8 +221,6 @@ class CommandManager(ScrollArea):
 
         # Alone Interfaces
         self.SceneInterface.scene_id_signal.connect(lambda scene_id: self.command_update.emit('/scene ' + scene_id))
-        self.SpawnInterface.monster_id_signal.connect(
-            lambda monster_id, stage_id: self.handleSpawnClicked(monster_id, stage_id))
         self.GiveInterface.item_id_signal.connect(lambda item_id, index: self.handleGiveClicked(item_id, index))
         self.RelicInterface.relic_id_signal.connect(lambda relic_id: self.handleRelicClicked(relic_id))
         self.RelicInterface.custom_relic_signal.connect(lambda command: self.command_update.emit(command))
@@ -357,19 +353,6 @@ class CommandManager(ScrollArea):
             self.command_update.emit(command)
         else:
             self.command_update.emit('')
-
-    def handleSpawnClicked(self, monster_id, stage_id):
-        monster_num_edit = self.SpawnInterface.monster_num_edit.text()
-        monster_level_edit = self.SpawnInterface.monster_level_edit.text()
-        monster_round_edit = self.SpawnInterface.monster_round_edit.text()
-        command = '/spawn ' + monster_id + ' ' + stage_id
-        if monster_num_edit != '':
-            command += ' x' + monster_num_edit
-        if monster_level_edit != '':
-            command += ' lv' + monster_level_edit
-        if monster_round_edit != '':
-            command += ' r' + monster_round_edit
-        self.command_update.emit(command)
 
     def handleGiveClicked(self, item_id, index):
         give_level_edit = self.GiveInterface.give_level_edit.text()

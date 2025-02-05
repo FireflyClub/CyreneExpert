@@ -1,15 +1,15 @@
 import os
 import sys
 import subprocess
-from PySide6.QtGui import QIcon, QColor
+from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel, QStackedWidget, QHBoxLayout, QApplication
 from PySide6.QtCore import Qt, Signal, QTranslator
 from qframelesswindow import FramelessWindow, StandardTitleBar
 from qfluentwidgets import (Pivot, qrouter, ScrollArea, PrimaryPushSettingCard, Theme,
-                            TitleLabel, BodyLabel, PrimaryPushButton, FluentIcon, setTheme,
+                            BodyLabel, PrimaryPushButton, FluentIcon, setTheme,
                             ExpandGroupSettingCard, ComboBox, PrimaryToolButton, FluentTranslator)
 from src.util.style_sheet import StyleSheet
-from src.util.setting_card import SettingCard, SettingCardGroup
+from src.util.setting_card import SettingCardGroup
 from src.util.config import open_file, Info, cfg
 from devkit.convert import handleResConvert
 

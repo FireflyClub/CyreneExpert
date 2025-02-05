@@ -43,13 +43,6 @@ def open_file(self, file_path):
         Info(self, "E", 3000, self.tr("找不到文件!"))
         return False
 
-def get_version_type(version):
-    if not os.path.exists('firefly-launcher.py'):
-        return f'{version} REL'
-    else:
-        return f'{version} DEV'
-
-
 class Language(Enum):
     CHINESE_SIMPLIFIED = QLocale(QLocale.Chinese, QLocale.China)
     CHINESE_TRADITIONAL = QLocale(QLocale.Chinese, QLocale.Taiwan)
@@ -65,6 +58,14 @@ class LanguageSerializer(ConfigSerializer):
 
 
 class Config(QConfig):
+    def __init__(self):
+        super().__init__()
+        self.file = Path("Config.json")
+        self._cfg.file = Path("Config.json")
+        self.themeColor.defaultValue = QColor("#FFC0CB")
+        self.set(self.themeColor, QColor("#FFC0CB"))
+        self.save()
+
     ############### CONFIG ITEMS ###############
     dpiScale = OptionsConfigItem(
         "Style", "DpiScale", "Auto", OptionsValidator([1, 1.25, 1.5, 1.75, 2, "Auto"]), restart=True)
@@ -91,7 +92,7 @@ class Config(QConfig):
     DEFAULT_MYCOMMAND = os.path.join(ROOT, 'data/cmd/mycommand-default.txt')
 
     APP_NAME = "Firefly Launcher (Lethe)"
-    APP_VERSION = get_version_type("v2.0.0")
+    APP_VERSION = "1.0.0"
     APP_FONT = "SDK_SC_Web"
 
     ############### REMOTE INFO ###############
@@ -109,6 +110,4 @@ class Config(QConfig):
 
 
 cfg = Config()
-cfg.themeColor.defaultValue = QColor("#FFC0CB")
-cfg.set(cfg.themeColor, QColor("#FFC0CB"))
-qconfig.load(f'{cfg.ROOT}/Config.json', cfg)
+# qconfig.load(cfg., cfg)
