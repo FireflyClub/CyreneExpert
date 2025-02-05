@@ -1,5 +1,5 @@
-from app.importer import *
-from app.module import *
+from src.head import *
+from src.util import *
 
 
 # AdminInterface

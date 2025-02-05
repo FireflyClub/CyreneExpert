@@ -1,4 +1,4 @@
-from app.importer import *
+from src.head import *
 
 
 class SettingCardGroup(QWidget):

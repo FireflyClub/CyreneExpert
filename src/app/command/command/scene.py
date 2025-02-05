@@ -1,5 +1,5 @@
-from app.importer import *
-from app.module import *
+from src.head import *
+from src.util import *
 
 
 class Scene(QWidget):
@@ -63,7 +63,7 @@ class Scene(QWidget):
                 self.scene_table.setRowHidden(row, True)
 
     def handleSceneLoad(self):
-        with open(f'{cfg.ROOT}/src/data/{cfg.get(cfg.language).value.name()}/scene.txt', 'r', encoding='utf-8') as file:
+        with open(f'{cfg.ROOT}/data/cmd/{cfg.get(cfg.language).value.name()}/scene.txt', 'r', encoding='utf-8') as file:
             scene = [line for line in file.readlines() if
                      not (line.strip().startswith("//") or line.strip().startswith("#"))]
         self.scene_table.setRowCount(len(scene))

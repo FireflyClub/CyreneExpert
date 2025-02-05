@@ -1,9 +1,9 @@
-from . import *
-from app.module import *
-from app.importer import *
-from app.view.lunarcore.remote.common import handleCommandSend
+from .command import *
+from src.util import *
+from src.head import *
+# from src.app.remote.common import handleCommandSend
 
-class Command(ScrollArea):
+class CommandManager(ScrollArea):
     command_update = Signal(str)
 
     def __init__(self, text, parent=None):
@@ -168,7 +168,7 @@ class Command(ScrollArea):
         self.RelicInterface = Relic('RelicInterface', self)
         InitUI.addSubInterface(self, self.RelicInterface, 'RelicInterface', self.tr('遗器'), icon=FluentIcon.COMMAND_PROMPT)
 
-        InitUI.initPivotLayout(self, self.CommonInterface, True, True)
+        InitUI.initPivotLayout(self, self.CommonInterface, False, True)
 
         self.AdminInterface.vBoxLayout.addSpacing(10)
         self.pagerLayout = QHBoxLayout()
@@ -264,6 +264,7 @@ class Command(ScrollArea):
             remote_error.show()
             return
 
+        return # TODO Temp disable remote
         if cfg.get(cfg.uid) != '' and cfg.get(cfg.pKey) != '' and self.updateText.text() != '':
             try:
                 status, response = handleCommandSend(cfg.get(cfg.uid), cfg.get(cfg.pKey), self.updateText.text())

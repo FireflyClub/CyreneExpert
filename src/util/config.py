@@ -1,4 +1,4 @@
-from app.importer import *
+from src.head import *
 from .validator import ExeValidator, ExeListValidator, StringValidator
 
 
@@ -76,33 +76,29 @@ class Config(QConfig):
     fiddlerPath = ConfigItem("Config", "FiddlerPath", "", ExeValidator())
     autoCopy = ConfigItem("Config", "AutoCopy", True, BoolValidator())
 
-    usePRemote = ConfigItem("Remote", "usePRemote", False, BoolValidator())
-    useCRemote = ConfigItem("Remote", "useCRemote", False, BoolValidator())
-    uid = ConfigItem("Remote", "Uid", "10001", StringValidator())
-    pKey = ConfigItem("Remote", "PKey", "", StringValidator())
-    serverUrl = ConfigItem("Remote", "ServerUrl", "127.0.0.1:619", StringValidator())
-    cKey = ConfigItem("Remote", "CKey", "lethe", StringValidator())
+    # usePRemote = ConfigItem("Remote", "usePRemote", False, BoolValidator())
+    # useCRemote = ConfigItem("Remote", "useCRemote", False, BoolValidator())
+    # uid = ConfigItem("Remote", "Uid", "10001", StringValidator())
+    # pKey = ConfigItem("Remote", "PKey", "", StringValidator())
+    # serverUrl = ConfigItem("Remote", "ServerUrl", "127.0.0.1:619", StringValidator())
+    # cKey = ConfigItem("Remote", "CKey", "lethe", StringValidator())
 
     ############### APP INFO ###############
     ROOT = os.getcwd()
-    IMAGE = os.path.join(ROOT, 'src/image')
-    ICON = os.path.join(ROOT, 'src/image/icon.ico')
-    MYCOMMAND = os.path.join(ROOT, 'src/data/mycommand.txt')
-    DEFAULT_MYCOMMAND = os.path.join(ROOT, 'src/data/mycommand-default.txt')
+    IMAGE = os.path.join(ROOT, 'data/image')
+    ICON = os.path.join(ROOT, 'data/image/icon.ico')
+    MYCOMMAND = os.path.join(ROOT, 'data/cmd/mycommand.txt')
+    DEFAULT_MYCOMMAND = os.path.join(ROOT, 'data/cmd/mycommand-default.txt')
 
     APP_NAME = "Firefly Launcher (Lethe)"
     APP_VERSION = get_version_type("v2.0.0")
     APP_FONT = "SDK_SC_Web"
 
-    ############### LOGIN FUNCTION ###############
-    LOGIN_STATUS = False
-    LOGIN_PWD = "firefly"
-
     ############### REMOTE INFO ###############
-    ROUTE_PAPPLY = "/api/papply"
-    ROUTE_PVERIFY = "/api/pverify"
-    ROUTE_PREMOTE = "/api/premote"
-    ROUTE_CREMOTE = "/api/cremote"
+    # ROUTE_PAPPLY = "/api/papply"
+    # ROUTE_PVERIFY = "/api/pverify"
+    # ROUTE_PREMOTE = "/api/premote"
+    # ROUTE_CREMOTE = "/api/cremote"
 
     ############### LINK CONFIG ###############
     URL_LATEST = "https://github.com/letheriver2007/Firefly-Launcher/releases/latest"

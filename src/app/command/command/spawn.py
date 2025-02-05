@@ -1,5 +1,5 @@
-from app.importer import *
-from app.module import *
+from src.head import *
+from src.util import *
 
 
 class Spawn(QWidget):
@@ -141,7 +141,7 @@ class Spawn(QWidget):
                 self.stage_table.setRowHidden(row, True)
 
     def handleMonsterLoad(self):
-        with open(f'{cfg.ROOT}/src/data/{cfg.get(cfg.language).value.name()}/monster.txt', 'r', encoding='utf-8') as file:
+        with open(f'{cfg.ROOT}/data/cmd/{cfg.get(cfg.language).value.name()}/monster.txt', 'r', encoding='utf-8') as file:
             monster = [line for line in file.readlines() if
                        not (line.strip().startswith("//") or line.strip().startswith("#"))]
         self.monster_table.setRowCount(len(monster))
@@ -155,7 +155,7 @@ class Spawn(QWidget):
         self.monster_table.setHorizontalHeaderLabels([self.tr('显示怪物名称'), 'ID'])
 
     def handleStageLoad(self):
-        with open(f'{cfg.ROOT}/src/data/{cfg.get(cfg.language).value.name()}/stage.txt', 'r', encoding='utf-8') as file:
+        with open(f'{cfg.ROOT}/data/cmd/{cfg.get(cfg.language).value.name()}/stage.txt', 'r', encoding='utf-8') as file:
             stage = [line for line in file.readlines() if
                      not (line.strip().startswith("//") or line.strip().startswith("#"))]
         self.stage_table.setRowCount(len(stage))

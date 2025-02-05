@@ -1,5 +1,5 @@
-from app.importer import *
-from app.module import *
+from src.head import *
+from src.util import *
 
 
 class Give(QWidget):
@@ -121,7 +121,7 @@ class Give(QWidget):
         interface[index]()
 
     def handleAvatarLoad(self):
-        with open(f'{cfg.ROOT}/src/data/{cfg.get(cfg.language).value.name()}/avatar.txt', 'r', encoding='utf-8') as file:
+        with open(f'{cfg.ROOT}/data/cmd/{cfg.get(cfg.language).value.name()}/avatar.txt', 'r', encoding='utf-8') as file:
             avatar = [line for line in file.readlines() if
                       not (line.strip().startswith("//") or line.strip().startswith("#"))]
         self.give_table.setRowCount(len(avatar))
@@ -135,7 +135,7 @@ class Give(QWidget):
         self.give_table.setHorizontalHeaderLabels([self.tr('角色名称'), 'ID'])
 
     def handleLightconeLoad(self):
-        with open(f'{cfg.ROOT}/src/data/{cfg.get(cfg.language).value.name()}/lightcone.txt', 'r', encoding='utf-8') as file:
+        with open(f'{cfg.ROOT}/data/cmd/{cfg.get(cfg.language).value.name()}/lightcone.txt', 'r', encoding='utf-8') as file:
             lightcone = [line for line in file.readlines() if
                          not (line.strip().startswith("//") or line.strip().startswith("#"))]
         self.give_table.setRowCount(len(lightcone))
@@ -149,7 +149,7 @@ class Give(QWidget):
         self.give_table.setHorizontalHeaderLabels([self.tr('光锥名称'), 'ID'])
 
     def handleItemLoad(self):
-        with open(f'{cfg.ROOT}/src/data/{cfg.get(cfg.language).value.name()}/item.txt', 'r', encoding='utf-8') as file:
+        with open(f'{cfg.ROOT}/data/cmd/{cfg.get(cfg.language).value.name()}/item.txt', 'r', encoding='utf-8') as file:
             item = [line for line in file.readlines() if
                     not (line.strip().startswith("//") or line.strip().startswith("#"))]
         self.give_table.setRowCount(len(item))
@@ -163,7 +163,7 @@ class Give(QWidget):
         self.give_table.setHorizontalHeaderLabels([self.tr('物品名称'), 'ID'])
 
     def handleFoodLoad(self):
-        with open(f'{cfg.ROOT}/src/data/{cfg.get(cfg.language).value.name()}/food.txt', 'r', encoding='utf-8') as file:
+        with open(f'{cfg.ROOT}/data/cmd/{cfg.get(cfg.language).value.name()}/food.txt', 'r', encoding='utf-8') as file:
             food = [line for line in file.readlines() if
                     not (line.strip().startswith("//") or line.strip().startswith("#"))]
         self.give_table.setRowCount(len(food))
@@ -177,7 +177,7 @@ class Give(QWidget):
         self.give_table.setHorizontalHeaderLabels([self.tr('食物名称'), 'ID'])
 
     def handleHeadLoad(self):
-        with open(f'{cfg.ROOT}/src/data/{cfg.get(cfg.language).value.name()}/head.txt', 'r', encoding='utf-8') as file:
+        with open(f'{cfg.ROOT}/data/cmd/{cfg.get(cfg.language).value.name()}/head.txt', 'r', encoding='utf-8') as file:
             head = [line for line in file.readlines() if
                     not (line.strip().startswith("//") or line.strip().startswith("#"))]
         self.give_table.setRowCount(len(head))

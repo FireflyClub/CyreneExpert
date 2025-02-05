@@ -8,9 +8,9 @@ from qframelesswindow import FramelessWindow, StandardTitleBar
 from qfluentwidgets import (Pivot, qrouter, ScrollArea, PrimaryPushSettingCard, Theme,
                             TitleLabel, BodyLabel, PrimaryPushButton, FluentIcon, setTheme,
                             ExpandGroupSettingCard, ComboBox, PrimaryToolButton, FluentTranslator)
-from app.module.style_sheet import StyleSheet
-from app.module.setting_card import SettingCard, SettingCardGroup
-from app.module.config import open_file, Info, cfg
+from src.util.style_sheet import StyleSheet
+from src.util.setting_card import SettingCard, SettingCardGroup
+from src.util.config import open_file, Info, cfg
 from devkit.convert import handleResConvert
 
 

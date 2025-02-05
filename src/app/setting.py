@@ -1,5 +1,5 @@
-from app.importer import *
-from app.module import *
+from src.head import *
+from src.util import *
 
 
 class LineEditSettingCard_Port(SettingCard):
@@ -52,6 +52,12 @@ class Setting(ScrollArea):
             self.tr('界面显示语言'),
             texts=['简体中文', '繁體中文', 'English', self.tr('跟随系统设置')]
         )
+        self.autoCopyCard = SwitchSettingCard(
+            FluentIcon.COPY,
+            self.tr('命令自动复制'),
+            self.tr('选择命令时，自动复制命令到剪贴板'),
+            configItem=cfg.autoCopy
+        )
         self.restartCard = PrimaryPushSettingCard(
             self.tr('重启程序'),
             FluentIcon.ROTATE,
@@ -63,6 +69,7 @@ class Setting(ScrollArea):
         self.PersonalInterface.addSettingCard(self.themeColorCard)
         self.PersonalInterface.addSettingCard(self.zoomCard)
         self.PersonalInterface.addSettingCard(self.languageCard)
+        self.PersonalInterface.addSettingCard(self.autoCopyCard)
         self.PersonalInterface.addSettingCard(self.restartCard)
 
         InitUI.addSubInterface(self, self.PersonalInterface, 'PersonalInterface', self.tr('程序'), icon=FluentIcon.SETTING)
@@ -75,7 +82,14 @@ class Setting(ScrollArea):
         self.themeColorCard.colorChanged.connect(lambda c: setThemeColor(c, lazy=True))
         self.zoomCard.comboBox.currentIndexChanged.connect(self.restart_application)
         self.languageCard.comboBox.currentIndexChanged.connect(self.restart_application)
+        self.autoCopyCard.checkedChanged.connect(self.handleAutoCopyChanged)
         self.restartCard.clicked.connect(self.restart_application)
+
+    def handleAutoCopyChanged(self):
+        if cfg.get(cfg.autoCopy):
+            Info(self, 'S', 1000, self.tr('自动复制已开启!'))
+        else:
+            Info(self, 'S', 1000, self.tr('自动复制已关闭!'))
 
     def restart_application(self):
         current_process = QProcess()

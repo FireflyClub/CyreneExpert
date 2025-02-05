@@ -1,6 +1,6 @@
 from . import *
-from app.importer import *
-from app.module import *
+from src.head import *
+from src.util import *
 
 
 class Main(MSFluentWindow):
@@ -28,15 +28,14 @@ class Main(MSFluentWindow):
         QApplication.processEvents()
         self.__initNavigation()
         self.splashScreen.finish()
-        self.__initInfo()
 
     def __initNavigation(self):
         self.homeInterface = Home('HomeInterface', self)
         self.addSubInterface(self.homeInterface, FluentIcon.HOME, self.tr('主页'), FluentIcon.HOME_FILL)
         self.launcherInterface = Launcher('LauncherInterface', self)
         self.addSubInterface(self.launcherInterface, FluentIcon.PLAY, self.tr('启动器'), FluentIcon.PLAY)
-        self.lunarcoreInterface = LunarCore('LunarCoreInterface', self)
-        self.addSubInterface(self.lunarcoreInterface, FluentIcon.CAFE, 'LunarCore', FluentIcon.CAFE)
+        self.commandInterface = CommandManager('CommandManager', self)
+        self.addSubInterface(self.commandInterface, FluentIcon.CAFE, self.tr('命令'), FluentIcon.CAFE)
         self.proxyInterface = Proxy('ProxyInterface', self)
         self.addSubInterface(self.proxyInterface, FluentIcon.CERTIFICATE, self.tr('代理'), FluentIcon.CERTIFICATE)
 
@@ -52,13 +51,6 @@ class Main(MSFluentWindow):
         self.settingInterface = Setting('SettingInterface', self)
         self.addSubInterface(self.settingInterface, FluentIcon.SETTING, self.tr('设置'), FluentIcon.SETTING,
                              NavigationItemPosition.BOTTOM)
-
-    def __initInfo(self):
-        if cfg.LOGIN_STATUS:
-            self.count_pwd = 0
-            self.login_card = MessageLogin(self)
-            self.login_card.show()
-            self.login_card.passwordEntered.connect(self.handleLogin)
 
     def handleCenterWindow(self):
         desktop = QApplication.screens()[0].availableGeometry()
@@ -91,58 +83,6 @@ class Main(MSFluentWindow):
         if not isSetupFont:
             subprocess.run(f'cd {cfg.ROOT}/src/patch/font && start zh-cn.ttf', shell=True)
             sys.exit()
-
-    def __InitErrorInfos(self, hwid):
-        self.count_pwd += 1
-
-        if hasattr(self, 'login_error_info'):
-            self.login_error_info.close()
-        self.login_error_info = InfoBar(
-            icon=InfoBarIcon.ERROR,
-            title=self.tr('密码错误!'),
-            content=self.tr('次数: ') + str(self.count_pwd),
-            orient=Qt.Horizontal,
-            isClosable=False,
-            position=InfoBarPosition.TOP,
-            duration=-1,
-            parent=self
-        )
-
-        if hasattr(self, 'hwid_error'):
-            self.hwid_error.close()
-        self.hwid_error = InfoBar(
-            icon=InfoBarIcon.WARNING,
-            title=hwid,
-            content='',
-            orient=Qt.Horizontal,
-            isClosable=False,
-            position=InfoBarPosition.TOP,
-            duration=-1,
-            parent=self
-        )
-        hwid_error_button = PrimaryPushButton(self.tr('复制'))
-        hwid_error_button.clicked.connect(lambda: QApplication.clipboard().setText(hwid))
-        self.hwid_error.addWidget(hwid_error_button)
-
-        self.hwid_error.show()
-        self.login_error_info.show()
-    
-    def __HandleLoginPWD(self, hwid):
-        sha256_hash = hashlib.sha256((hwid + "Lethe").encode()).hexdigest()
-        md5_hash = hashlib.md5((sha256_hash + "Lethe").encode()).hexdigest()
-        return md5_hash[0:8].upper()
-
-    def handleLogin(self, pwd):
-        result = subprocess.check_output('wmic csproduct get uuid', shell=True)
-        hwid = result.decode().strip().split('\n')[1].strip()
-
-        if self.__HandleLoginPWD(hwid) == pwd or cfg.LOGIN_PWD == pwd:
-            Info(self, 'S', 1000, self.tr('登录成功!'))
-            self.login_card.close()
-            self.login_error_info.close()
-            self.hwid_error.close()
-        else:
-            self.__InitErrorInfos(hwid)
 
     def handleThemeChanged(self):
         new_theme = Theme.LIGHT if cfg.get(cfg.themeMode) == Theme.DARK else Theme.DARK

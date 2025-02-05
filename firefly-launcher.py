@@ -3,8 +3,8 @@ import sys
 from PySide6.QtWidgets import QApplication
 from PySide6.QtCore import Qt, QLocale, QTranslator
 from qfluentwidgets import FluentTranslator
-from app.view.main import Main
-from app.module.config import cfg
+from src.app.main import Main
+from src.util.config import cfg
 
 if cfg.get(cfg.dpiScale) != "Auto":
     os.environ["QT_ENABLE_HIGHDPI_SCALING"] = "0"

@@ -1,5 +1,5 @@
-from app.importer import *
-from app.module import *
+from src.head import *
+from src.util import *
 
 
 class Relic(QWidget):
@@ -308,7 +308,7 @@ class Relic(QWidget):
 
     # 读取和加载页面信息相关
     def handleBaseRelicLoad(self):
-        with open(f'{cfg.ROOT}/src/data/{cfg.get(cfg.language).value.name()}/relic.txt', 'r', encoding='utf-8') as file:
+        with open(f'{cfg.ROOT}/data/cmd/{cfg.get(cfg.language).value.name()}/relic.txt', 'r', encoding='utf-8') as file:
             relic = [line for line in file.readlines() if
                      not (line.strip().startswith("//") or line.strip().startswith("#"))]
         self.relic_table.setRowCount(len(relic))
@@ -323,7 +323,7 @@ class Relic(QWidget):
         self.relic_table.setHorizontalHeaderLabels([self.tr('遗器名称'), self.tr('部位'), 'ID'])
 
     def handleCustomRelicLoad(self):
-        with open(f'{cfg.ROOT}/src/data/{cfg.get(cfg.language).value.name()}/myrelic.txt', 'r', encoding='utf-8') as file:
+        with open(f'{cfg.ROOT}/data/cmd/{cfg.get(cfg.language).value.name()}/myrelic.txt', 'r', encoding='utf-8') as file:
             relic = [line for line in file.readlines() if
                      not (line.strip().startswith("//") or line.strip().startswith("#"))]
         self.relic_table.setRowCount(len(relic))
@@ -337,7 +337,7 @@ class Relic(QWidget):
             [self.tr('遗器名称'), self.tr('部位'), self.tr('适用角色'), 'command'])
 
     def handleEntryLoad(self):
-        with open(f'{cfg.ROOT}/src/data/{cfg.get(cfg.language).value.name()}/entry.txt', 'r', encoding='utf-8') as file:
+        with open(f'{cfg.ROOT}/data/cmd/{cfg.get(cfg.language).value.name()}/entry.txt', 'r', encoding='utf-8') as file:
             entry = [line for line in file.readlines() if
                      not (line.strip().startswith("//") or line.strip().startswith("#"))]
         self.entry_table.setRowCount(len(entry))

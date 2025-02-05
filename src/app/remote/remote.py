@@ -1,6 +1,6 @@
 from . import *
-from app.importer import *
-from app.module import *
+from src.head import *
+from src.util import *
 
 
 class Remote(ScrollArea):

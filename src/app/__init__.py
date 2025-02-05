@@ -3,6 +3,6 @@ from .home import Home
 from .launcher import Launcher
 from .proxy import Proxy
 from .setting import Setting
-from .lunarcore.lunarcore import LunarCore
+from .command.CommandManager import CommandManager
 
-__all__ = ['Home', 'Launcher', 'Proxy', 'Setting', 'LunarCore']
+__all__ = ['Home', 'Launcher', 'Proxy', 'Setting', 'CommandManager']
