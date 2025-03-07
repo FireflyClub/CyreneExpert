@@ -28,7 +28,7 @@ from qfluentwidgets import (Pivot, qrouter, ScrollArea, PrimaryPushSettingCard, 
                             setCustomStyleSheet, FlowLayout, HorizontalFlipView, FlipImageDelegate, Dialog,
                             HyperlinkCard, MSFluentWindow, NavigationItemPosition, setTheme, SplashScreen,
                             TeachingTipTailPosition, CustomColorSettingCard, PushButton, ComboBoxSettingCard,
-                            ExpandSettingCard, ConfigValidator, ColorConfigItem)
+                            ExpandSettingCard, ConfigValidator, ColorConfigItem, ElevatedCardWidget)
 
 
 __all__ = [
@@ -52,5 +52,5 @@ __all__ = [
     'setCustomStyleSheet', 'FlowLayout', 'HorizontalFlipView', 'FlipImageDelegate', 'Dialog',
     'HyperlinkCard', 'MSFluentWindow', 'NavigationItemPosition', 'setTheme', 'SplashScreen',
     'TeachingTipTailPosition', 'CustomColorSettingCard', 'PushButton', 'ComboBoxSettingCard',
-    'ExpandSettingCard', 'ConfigValidator', 'ColorConfigItem'
+    'ExpandSettingCard', 'ConfigValidator', 'ColorConfigItem', 'ElevatedCardWidget'
 ]

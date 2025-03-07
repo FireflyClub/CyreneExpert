@@ -28,21 +28,19 @@ class SettingCardGroup(QWidget):
         return self.resize(self.width(), h)
 
 
-class SettingCard(QFrame):
+class SettingCard(ElevatedCardWidget):
     def __init__(self, icon: Union[str, QIcon, FluentIconBase], title=None, content=None, parent=None):
         super().__init__(parent=parent)
         self.iconLabel = SettingIconWidget(icon, self)
         self.titleLabel = QLabel(title, self)
         self.contentLabel = QLabel(content or '', self)
-        self.hBoxLayout = QHBoxLayout(self)
-        self.vBoxLayout = QVBoxLayout()
-
-        if not content:
-            self.contentLabel.hide()
 
         self.setFixedHeight(70 if content else 50)
         self.iconLabel.setFixedSize(16, 16)
+        if not content: self.contentLabel.hide()
 
+        self.hBoxLayout = QHBoxLayout(self)
+        self.vBoxLayout = QVBoxLayout()
         self.hBoxLayout.setSpacing(0)
         self.hBoxLayout.setContentsMargins(16, 0, 0, 0)
         self.hBoxLayout.setAlignment(Qt.AlignVCenter)
@@ -70,18 +68,15 @@ class SettingCard(QFrame):
         self.contentLabel.setText(content)
         self.contentLabel.setVisible(bool(content))
 
-    def setValue(self, value):
-        pass
-
     def paintEvent(self, e):
         painter = QPainter(self)
         painter.setRenderHints(QPainter.Antialiasing)
 
         if isDarkTheme():
-            painter.setBrush(QColor(255, 255, 255, 13))
+            painter.setBrush(QColor(180, 210, 230, 40))
             painter.setPen(QColor(0, 0, 0, 50))
         else:
-            painter.setBrush(QColor(255, 255, 255, 170))
+            painter.setBrush(QColor(230, 246, 255, 60))
             painter.setPen(QColor(0, 0, 0, 19))
 
         painter.drawRoundedRect(self.rect().adjusted(1, 1, -1, -1), 6, 6)

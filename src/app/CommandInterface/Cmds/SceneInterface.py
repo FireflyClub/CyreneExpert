@@ -17,7 +17,7 @@ class Scene(QWidget):
         self.scene_search_line.setFixedHeight(35)
 
         self.scene_table = TableWidget(self)
-        self.scene_table.setFixedSize(1140, 420)
+        self.scene_table.setFixedSize(1140, 500)
         self.scene_table.setColumnCount(2)
 
         self.scene_table.setBorderVisible(True)

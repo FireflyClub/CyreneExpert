@@ -29,7 +29,7 @@ class Relic(QWidget):
 
         self.relic_table = TableWidget(self)
         self.relic_table.setColumnCount(4)
-        self.relic_table.setFixedSize(405, 420)
+        self.relic_table.setFixedSize(405, 500)
         self.relic_table.setColumnWidth(0, 190)
         self.relic_table.setColumnWidth(1, 78)
         self.relic_table.setColumnWidth(2, 135)
@@ -59,7 +59,7 @@ class Relic(QWidget):
 
         self.entry_table = TableWidget(self)
         self.entry_table.setColumnCount(3)
-        self.entry_table.setFixedSize(305, 420)
+        self.entry_table.setFixedSize(305, 500)
         self.entry_table.setColumnWidth(0, 148)
         self.entry_table.setColumnWidth(1, 80)
         self.entry_table.setColumnWidth(2, 75)

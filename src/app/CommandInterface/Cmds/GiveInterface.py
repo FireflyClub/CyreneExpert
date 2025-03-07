@@ -21,7 +21,7 @@ class Give(QWidget):
             [self.tr("角色"), self.tr("光锥"), self.tr("物品"), self.tr("食物"), self.tr("头像")])
 
         self.give_table = TableWidget(self)
-        self.give_table.setFixedSize(915, 420)
+        self.give_table.setFixedSize(915, 500)
         self.give_table.setColumnCount(2)
         self.give_table.setColumnWidth(0, 613)
         self.give_table.setColumnWidth(1, 300)

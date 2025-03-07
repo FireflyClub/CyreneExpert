@@ -21,7 +21,7 @@ class Custom(QWidget):
         self.default_button.setFixedSize(100, 35)
 
         self.mycommand_table = TableWidget(self)
-        self.mycommand_table.setFixedSize(1140, 420)
+        self.mycommand_table.setFixedSize(1140, 500)
         self.mycommand_table.setColumnCount(2)
 
         self.mycommand_table.setBorderVisible(True)
