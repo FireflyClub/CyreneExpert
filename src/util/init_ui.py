@@ -16,22 +16,16 @@ class InitUI:
         self.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         StyleSheet.SETTING_INTERFACE.apply(self)
 
-    def initPivotLayout(self, default, isSub=False, needUpdate=False):
+    def initPivotLayout(self, default):
         self.vBoxLayout = QVBoxLayout(self.scrollWidget)
         self.vBoxLayout.addWidget(self.pivot, 0, Qt.AlignLeft)
         self.vBoxLayout.addWidget(self.stackedWidget)
         self.stackedWidget.setCurrentWidget(default)
         self.pivot.setCurrentItem(default.objectName())
+        self.setViewportMargins(20, 0, 20, 20)
+        self.vBoxLayout.setContentsMargins(0, 10, 10, 0)
         qrouter.setDefaultRouteKey(self.stackedWidget, default.objectName())
-
-        if isSub:
-            self.vBoxLayout.setContentsMargins(0, 0, 10, 0)
-        else:
-            self.setViewportMargins(20, 0, 20, 20)
-            self.vBoxLayout.setContentsMargins(0, 10, 10, 0)
-
-        self.stackedWidget.currentChanged.connect(
-            lambda index: InitUI.onCurrentIndexChanged(self, index, needUpdate))
+        self.stackedWidget.currentChanged.connect(lambda index: InitUI.onCurrentIndexChanged(self, index))
 
     def addSubInterface(self, widget: QLabel, objName, text, icon=None):
         widget.setObjectName(objName)
@@ -47,6 +41,3 @@ class InitUI:
         widget = self.stackedWidget.widget(index)
         self.pivot.setCurrentItem(widget.objectName())
         qrouter.push(self.stackedWidget, widget.objectName())
-
-        if needUpdate:
-            self.updateText.clear()

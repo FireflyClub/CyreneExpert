@@ -48,7 +48,7 @@ class CommandManager(ScrollArea):
         self.RelicInterface = Relic('RelicInterface', self)
         InitUI.addSubInterface(self, self.RelicInterface, 'RelicInterface', self.tr('遗器'), icon=FluentIcon.COMMAND_PROMPT)
 
-        InitUI.initPivotLayout(self, self.AdminInterface, False, True)
+        InitUI.initPivotLayout(self, self.AdminInterface)
 
         self.updateLayout = QHBoxLayout(self.updateContainer)
         self.updateLayout.addWidget(self.updateText, alignment=Qt.AlignCenter)

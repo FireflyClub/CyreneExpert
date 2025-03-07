@@ -65,13 +65,22 @@ class Kick(SettingCard):
 
 
 class Ban(SettingCard):
-    clicked_ban = Signal()
-    clicked_unban = Signal()
+    signal = Signal()
 
-    def __init__(self, title, icon=FluentIcon.TAG, content='/ban @[player id] || /unban @[player id]'):
+    def __init__(self, title, icon=FluentIcon.TAG, content='/ban {add | delete}'):
         super().__init__(icon, title, content)
         pass
 
+
+class Windy(SettingCard):
+    signal = Signal()
+
+    def __init__(self, title, icon=FluentIcon.TAG, content='/windy. A mysterious cmd.'):
+        super().__init__(icon, title, content)
+        self.button = PrimaryPushButton(self.tr('使用'), self)
+        self.hBoxLayout.addWidget(self.button, 0, Qt.AlignRight)
+        self.hBoxLayout.addSpacing(16)
+        self.button.clicked.connect(self.signal)
 
 class Admin(SettingCardGroup):
     command_update = Signal(str)
@@ -85,12 +94,6 @@ class Admin(SettingCardGroup):
         self.__connectSignalToSlot()
 
     def __initWidget(self):
-        self.statusCard = PrimaryPushSettingCard(
-            self.tr('使用'),
-            FluentIcon.TAG,
-            self.tr('服务端状态'),
-            '/status'
-        )
         self.accountCard = Account(
             self.tr('管理账号')
         )
@@ -109,29 +112,32 @@ class Admin(SettingCardGroup):
         self.announceCard = Announce(
             self.tr('发送公告')
         )
+        self.windyCard = Windy(
+            self.tr('Windy!')
+        )
 
     def __initLayout(self):
-        self.addSettingCard(self.statusCard)
         self.addSettingCard(self.accountCard)
         self.addSettingCard(self.permissionCard)
         self.addSettingCard(self.kickCard)
         self.addSettingCard(self.banCard)
         self.addSettingCard(self.reloadCard)
         self.addSettingCard(self.announceCard)
+        self.addSettingCard(self.windyCard)
 
     def __connectSignalToSlot(self):
-        self.statusCard.clicked.connect(lambda: self.command_update.emit('/status'))
         self.accountCard.create_account.connect(lambda: self.handleAccountClicked('create'))
         self.accountCard.delete_account.connect(lambda: self.handleAccountClicked('delete'))
         self.kickCard.kick_player.connect(self.handleKickClicked)
-    
+        self.windyCard.signal.connect(lambda: self.command_update.emit('/windy'))
+
     def handleKickClicked(self):
         account_uid = self.kickCard.account_uid.text()
         if account_uid != '':
             self.command_update.emit('/kick @' + account_uid)
         else:
             Info(self.parent, 'E', 3000, self.tr('请输入正确的UID!'))
-    
+
     def handleAccountClicked(self, types):
         account_name = self.accountCard.account_name.text()
         account_uid = self.accountCard.account_uid.text()

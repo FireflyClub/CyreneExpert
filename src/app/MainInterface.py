@@ -32,12 +32,8 @@ class Main(MSFluentWindow):
     def __initNavigation(self):
         self.homeInterface = Home('HomeInterface', self)
         self.addSubInterface(self.homeInterface, FluentIcon.HOME, self.tr('主页'), FluentIcon.HOME_FILL)
-        self.launcherInterface = Launcher('LauncherInterface', self)
-        self.addSubInterface(self.launcherInterface, FluentIcon.PLAY, self.tr('启动器'), FluentIcon.PLAY)
         self.commandInterface = CommandManager('CommandManager', self)
         self.addSubInterface(self.commandInterface, FluentIcon.CAFE, self.tr('命令'), FluentIcon.CAFE)
-        self.proxyInterface = Proxy('ProxyInterface', self)
-        self.addSubInterface(self.proxyInterface, FluentIcon.CERTIFICATE, self.tr('代理'), FluentIcon.CERTIFICATE)
 
         self.navigationInterface.addItem(
             routeKey='theme',

@@ -2,6 +2,21 @@ from src.head import *
 from src.util import *
 
 
+class Help(SettingCard):
+    signal = Signal()
+
+    def __init__(self, title, icon=FluentIcon.TAG, content='/help [cmd]'):
+        super().__init__(icon, title, content)
+        self.line = LineEdit(self)
+        self.line.setPlaceholderText(self.tr("命令"))
+        self.button = PrimaryPushButton(self.tr('使用'), self)
+        self.hBoxLayout.addWidget(self.line, 0, Qt.AlignRight)
+        self.hBoxLayout.addSpacing(10)
+        self.hBoxLayout.addWidget(self.button, 0, Qt.AlignRight)
+        self.hBoxLayout.addSpacing(16)
+        self.button.clicked.connect(self.signal)
+
+
 class Lineup(SettingCard):
     lineup_signal = Signal()
 
@@ -45,11 +60,8 @@ class Common(SettingCardGroup):
         self.__connectSignalToSlot()
 
     def __initWidget(self):
-        self.helpCard = PrimaryPushSettingCard(
-            self.tr('使用'),
-            FluentIcon.TAG,
-            self.tr('命令帮助'),
-            '/help'
+        self.helpCard = Help(
+            self.tr('命令帮助')
         )
         self.lineupCard = Lineup(
             self.tr('队伍数据修改')
@@ -64,9 +76,14 @@ class Common(SettingCardGroup):
         self.addSettingCard(self.unstuckCard)
 
     def __connectSignalToSlot(self):
-        self.helpCard.clicked.connect(lambda: self.command_update.emit('/help'))
+        self.helpCard.signal.connect(self.handleHelpClicked)
         self.lineupCard.lineup_signal.connect(self.handleLineupClicked)
         self.unstuckCard.unstuck_signal.connect(self.handleUnstuckClicked)
+
+    def handleHelpClicked(self):
+        cmd = self.helpCard.line.text()
+        if (cmd != ''): cmd = ' ' + cmd
+        self.command_update.emit('/help' + cmd)
 
     def handleLineupClicked(self):
         self.lineupCard.comboBox.getCurrentIndex()
