@@ -3,6 +3,8 @@ from src.util import *
 
 
 class Custom(QWidget):
+    command_update = Signal(str)
+
     def __init__(self, text: str, parent=None):
         super().__init__(parent=parent)
         self.setObjectName(text)
@@ -81,7 +83,7 @@ class Custom(QWidget):
                 self.mycommand_table.editItem(self.mycommand_table.item(row, 0))
             elif column == 1:
                 command = self.mycommand_table.item(row, 1).text()
-                self.parent.command_update.emit(command)
+                self.command_update.emit(command)
         elif types == 'double':
             self.mycommand_table.removeRow(row)
             with open(cfg.MYCOMMAND, 'r', encoding='utf-8') as file:

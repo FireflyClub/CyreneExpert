@@ -3,7 +3,7 @@ from src.util import *
 
 
 class Scene(QWidget):
-    scene_id_signal = Signal(str)
+    command_update = Signal(str)
 
     def __init__(self, text: str, parent=None):
         super().__init__(parent=parent)
@@ -48,7 +48,7 @@ class Scene(QWidget):
     def handleSceneSignal(self, row):
         item = self.scene_table.item(row, 1)
         scene_id = item.text()
-        self.scene_id_signal.emit(scene_id)
+        self.command_update.emit('/scene ' + scene_id)
 
     def handleSceneSearch(self):
         keyword = self.scene_search_line.text()

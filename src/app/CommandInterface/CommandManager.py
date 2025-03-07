@@ -4,8 +4,6 @@ from src.head import *
 # from src.app.remote.common import handleCommandSend
 
 class CommandManager(ScrollArea):
-    command_update = Signal(str)
-
     def __init__(self, text, parent=None):
         super().__init__(parent=parent)
         self.parent = parent
@@ -66,7 +64,6 @@ class CommandManager(ScrollArea):
         self.vBoxLayout.addWidget(self.updateContainer)
 
     def __connectSignalToSlot(self):
-        self.command_update.connect(self.handleCommandUpdate)
         self.clearButton.clicked.connect(lambda: self.updateText.clear())
         self.saveButton.clicked.connect(self.handleSaveClicked)
         self.copyButton.clicked.connect(lambda: self.handleCopyToClipboard('show'))
@@ -75,10 +72,10 @@ class CommandManager(ScrollArea):
         self.AdminInterface.command_update.connect(self.handleCommandUpdate)
         self.CommonInterface.command_update.connect(self.handleCommandUpdate)
         self.DataInterface.command_update.connect(self.handleCommandUpdate)
-        self.SceneInterface.scene_id_signal.connect(lambda scene_id: self.command_update.emit('/scene ' + scene_id))
-        self.GiveInterface.item_id_signal.connect(lambda item_id, index: self.handleGiveClicked(item_id, index))
-        self.RelicInterface.relic_id_signal.connect(lambda relic_id: self.handleRelicClicked(relic_id))
-        self.RelicInterface.custom_relic_signal.connect(lambda command: self.command_update.emit(command))
+        self.CustomInterface.command_update.connect(self.handleCommandUpdate)
+        self.SceneInterface.command_update.connect(self.handleCommandUpdate)
+        self.GiveInterface.command_update.connect(self.handleCommandUpdate)
+        self.RelicInterface.command_update.connect(self.handleCommandUpdate)
 
     def handleCommandUpdate(self, text):
         self.updateText.clear()
@@ -137,58 +134,3 @@ class CommandManager(ScrollArea):
             clipboard.setText(text)
             if status == 'show':
                 Info(self.parent, 'S', 1000, self.tr('已复制到剪贴板!'))
-
-    # 命令处理
-    def handleGiveClicked(self, item_id, index):
-        give_level_edit = self.GiveInterface.give_level_edit.text()
-        give_eidolon_edit = self.GiveInterface.give_eidolon_edit.text()
-        give_num_edit = self.GiveInterface.give_num_edit.text()
-        command = '/give ' + item_id
-        if index == 0:
-            if give_level_edit != '':
-                command += ' lv' + give_level_edit
-            if give_eidolon_edit != '':
-                command += ' r' + give_eidolon_edit
-        elif index == 1:
-            if give_num_edit != '':
-                command += ' x' + give_num_edit
-            if give_level_edit != '':
-                command += ' lv' + give_level_edit
-            if give_eidolon_edit != '':
-                command += ' r' + give_eidolon_edit
-        elif index == 2 or index == 3:
-            if give_num_edit != '':
-                command += ' x' + give_num_edit
-        self.command_update.emit(command)
-
-    def handleRelicClicked(self, relic_id):
-        relic_level = self.RelicInterface.level_edit.text()
-        main_entry_name = self.RelicInterface.main_now_edit.text()
-        now_list_nozero = {k: v for k, v in self.RelicInterface.now_list.items() if v > 0}
-        entry_table = self.RelicInterface.entry_table
-        command = '/give ' + relic_id
-
-        if relic_level != '':
-            command += ' lv' + relic_level
-
-        if main_entry_name != '':
-            entry_index = 0
-            for i in range(entry_table.rowCount()):
-                if entry_table.item(i, 0).text() == main_entry_name and entry_table.item(i, 1).text() != self.tr(
-                        '通用'):
-                    entry_index = i
-                    break
-            main_entry = entry_table.item(entry_index, 2).text()
-            command += ' s' + main_entry
-
-        for entry_name, entry_num in now_list_nozero.items():
-            if entry_name != '':
-                entry_index = 0
-                for i in range(entry_table.rowCount()):
-                    if entry_table.item(i, 0).text() == entry_name and entry_table.item(i, 1).text() == self.tr('通用'):
-                        entry_index = i
-                        break
-                side_entry = entry_table.item(entry_index, 2).text()
-                command += ' ' + side_entry + ':' + str(entry_num)
-
-        self.command_update.emit(command)

@@ -3,8 +3,7 @@ from src.util import *
 
 
 class Relic(QWidget):
-    relic_id_signal = Signal(str)
-    custom_relic_signal = Signal(str)
+    command_update = Signal(str)
 
     def __init__(self, text: str, parent=None):
         super().__init__(parent=parent)
@@ -189,10 +188,38 @@ class Relic(QWidget):
         if selected_items:
             if self.base_relic_button.isChecked():
                 relic_id = selected_items[2].text()
-                self.relic_id_signal.emit(relic_id)
+                relic_level = self.level_edit.text()
+                main_entry_name = self.main_now_edit.text()
+                now_list_nozero = {k: v for k, v in self.now_list.items() if v > 0}
+
+                command = '/give ' + relic_id
+                if relic_level != '':
+                    command += ' lv' + relic_level
+
+                if main_entry_name != '':
+                    entry_index = 0
+                    for i in range(self.entry_table.rowCount()):
+                        if self.entry_table.item(i, 0).text() == main_entry_name and self.entry_table.item(i, 1).text() != self.tr(
+                                '通用'):
+                            entry_index = i
+                            break
+                    main_entry = self.entry_table.item(entry_index, 2).text()
+                    command += ' s' + main_entry
+
+                for entry_name, entry_num in now_list_nozero.items():
+                    if entry_name != '':
+                        entry_index = 0
+                        for i in range(self.entry_table.rowCount()):
+                            if self.entry_table.item(i, 0).text() == entry_name and self.entry_table.item(i, 1).text() == self.tr('通用'):
+                                entry_index = i
+                                break
+                        side_entry = self.entry_table.item(entry_index, 2).text()
+                        command += ' ' + side_entry + ':' + str(entry_num)
+
+                self.command_update.emit(command)
             elif self.custom_relic_button.isChecked():
                 command = selected_items[3].text()
-                self.custom_relic_signal.emit(command)
+                self.command_update.emit(command)
 
     # 条件更新时切换显示状态相关
     def handleRelicSearch(self):

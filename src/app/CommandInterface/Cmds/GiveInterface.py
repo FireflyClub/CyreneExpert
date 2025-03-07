@@ -3,7 +3,7 @@ from src.util import *
 
 
 class Give(QWidget):
-    item_id_signal = Signal(str, int)
+    command_update = Signal(str)
 
     def __init__(self, text: str, parent=None):
         super().__init__(parent=parent)
@@ -99,7 +99,26 @@ class Give(QWidget):
         index = self.give_combobox.currentIndex()
         if selected_items:
             item_id = selected_items[1].text()
-            self.item_id_signal.emit(item_id, index)
+            give_level_edit = self.give_level_edit.text()
+            give_eidolon_edit = self.give_eidolon_edit.text()
+            give_num_edit = self.give_num_edit.text()
+            command = '/give ' + item_id
+            if index == 0:
+                if give_level_edit != '':
+                    command += ' lv' + give_level_edit
+                if give_eidolon_edit != '':
+                    command += ' r' + give_eidolon_edit
+            elif index == 1:
+                if give_num_edit != '':
+                    command += ' x' + give_num_edit
+                if give_level_edit != '':
+                    command += ' lv' + give_level_edit
+                if give_eidolon_edit != '':
+                    command += ' r' + give_eidolon_edit
+            elif index == 2 or index == 3:
+                if give_num_edit != '':
+                    command += ' x' + give_num_edit
+            self.command_update.emit(command)
 
     def handleGiveSearch(self):
         keyword = self.give_search_line.text()
