@@ -13,7 +13,6 @@ pip install pyinstaller -i https://pypi.tuna.tsinghua.edu.cn/simple/
 
 pyinstaller -w -i ./src/image/icon.ico ./firefly-launcher.py -n Firefly-Launcher
 xcopy /s /e /y dist\Firefly-Launcher\ Firefly-Launcher\
-xcopy /s /e /y src\qss\ Firefly-Launcher\src\qss\
 xcopy /s /e /y src\image\ Firefly-Launcher\src\image\
 xcopy /s /e /y src\patch\ Firefly-Launcher\src\patch\
 xcopy /s /e /y src\data\ Firefly-Launcher\src\data\

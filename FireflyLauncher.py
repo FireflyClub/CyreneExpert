@@ -16,7 +16,7 @@ app.setAttribute(Qt.AA_DontCreateNativeWidgetSiblings)
 locale = cfg.get(cfg.language).value
 translator = FluentTranslator(locale)
 localTranslator = QTranslator()
-localTranslator.load(f"src\\translate\\{locale.name()}.qm")
+localTranslator.load(f"data\\translate\\{locale.name()}.qm")
 
 app.installTranslator(translator)
 app.installTranslator(localTranslator)

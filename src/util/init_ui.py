@@ -14,7 +14,7 @@ class InitUI:
         self.setWidget(self.scrollWidget)
         self.setWidgetResizable(True)
         self.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
-        StyleSheet.SETTING_INTERFACE.apply(self)
+        FluentStyleSheet.NAVIGATION_INTERFACE.apply(self)
 
     def initPivotLayout(self, default):
         self.vBoxLayout = QVBoxLayout(self.scrollWidget)

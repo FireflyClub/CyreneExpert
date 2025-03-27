@@ -11,20 +11,26 @@ class CommandManager(ScrollArea):
 
         self.__initWidget()
         self.__initLayout()
+        self.__initInfo()
         self.__connectSignalToSlot()
 
     def __initWidget(self):
         self.updateText = LineEdit()
-        self.updateText.setFixedSize(740, 35)
-        self.clearButton = PrimaryPushButton(self.tr('清空'))
-        self.saveButton = PrimaryPushButton(self.tr('保存'))
-        self.copyButton = PrimaryPushButton(self.tr('复制'))
-        self.actionButton = PrimaryPushButton(self.tr('执行'))
-        self.clearButton.setFixedSize(80, 35)
-        self.saveButton.setFixedSize(80, 35)
-        self.copyButton.setFixedSize(80, 35)
-        self.actionButton.setFixedSize(80, 35)
-        self.updateContainer = QWidget()
+        self.updateText.setFixedSize(800, 35)
+
+        self.uidText = LineEdit()
+        self.uidText.setFixedSize(120, 35)
+        self.uidText.setValidator(QIntValidator())
+        self.uidText.setPlaceholderText(self.tr('UID'))
+
+        self.copyButton = PrimaryToolButton(FluentIcon.COPY)
+        self.clearButton = PrimaryToolButton(FluentIcon.DELETE)
+        self.actionButton = PrimaryToolButton(FluentIcon.LINK)
+        self.saveButton = PrimaryToolButton(FluentIcon.SAVE)
+        self.copyButton.setFixedSize(35, 35)
+        self.clearButton.setFixedSize(35, 35)
+        self.actionButton.setFixedSize(35, 35)
+        self.saveButton.setFixedSize(35, 35)
 
     def __initLayout(self):
         self.AdminInterface = Admin(self.scrollWidget)
@@ -50,20 +56,26 @@ class CommandManager(ScrollArea):
 
         InitUI.initPivotLayout(self, self.AdminInterface)
 
-        self.updateLayout = QHBoxLayout(self.updateContainer)
+        self.updateLayout = QHBoxLayout()
         self.updateLayout.addWidget(self.updateText, alignment=Qt.AlignCenter)
         self.updateLayout.addStretch(1)
-        self.updateLayout.addWidget(self.clearButton, alignment=Qt.AlignCenter)
-        self.updateLayout.addSpacing(5)
-        self.updateLayout.addWidget(self.saveButton, alignment=Qt.AlignCenter)
+        self.updateLayout.addWidget(self.uidText, alignment=Qt.AlignCenter)
         self.updateLayout.addSpacing(5)
         self.updateLayout.addWidget(self.copyButton, alignment=Qt.AlignCenter)
         self.updateLayout.addSpacing(5)
+        self.updateLayout.addWidget(self.clearButton, alignment=Qt.AlignCenter)
+        self.updateLayout.addSpacing(5)
         self.updateLayout.addWidget(self.actionButton, alignment=Qt.AlignCenter)
+        self.updateLayout.addSpacing(5)
+        self.updateLayout.addWidget(self.saveButton, alignment=Qt.AlignCenter)
         self.updateLayout.addSpacing(15)
-        self.vBoxLayout.addWidget(self.updateContainer)
+        self.vBoxLayout.addLayout(self.updateLayout)
+
+    def __initInfo(self):
+        self.uidText.setText(cfg.get(cfg.targetUid))
 
     def __connectSignalToSlot(self):
+        self.uidText.textChanged.connect(lambda: cfg.set(cfg.targetUid, self.uidText.text()))
         self.clearButton.clicked.connect(lambda: self.updateText.clear())
         self.saveButton.clicked.connect(self.handleSaveClicked)
         self.copyButton.clicked.connect(lambda: self.handleCopyToClipboard('show'))
@@ -77,7 +89,8 @@ class CommandManager(ScrollArea):
         self.GiveInterface.command_update.connect(self.handleCommandUpdate)
         self.RelicInterface.command_update.connect(self.handleCommandUpdate)
 
-    def handleCommandUpdate(self, text):
+    def handleCommandUpdate(self, text, hasUid = True):
+        if hasUid: text += f" @{self.uidText.text()}"
         self.updateText.clear()
         self.updateText.setText(text)
         if cfg.get(cfg.autoCopy): self.handleCopyToClipboard('hide')
@@ -86,10 +99,10 @@ class CommandManager(ScrollArea):
         text = self.updateText.text()
         current_widget = self.stackedWidget.currentWidget()
         if text != '' and current_widget != self.CustomInterface:
-            formatted_text = f"自定义命令 : {text}\n"
-            with open(cfg.MYCOMMAND, 'a', encoding='utf-8') as file:
-                file.write(formatted_text)
-            
+            formatted_text = f"{self.tr('未命名')} : {text}\n"
+            with open(cfg.MYCOMMAND, 'a', encoding='utf-8') as f:
+                f.write(formatted_text)
+
             Info(self.parent, 'S', 1000, self.tr('保存成功!'))
 
             self.CustomInterface.handleMycommandLoad()

@@ -23,12 +23,12 @@ from qfluentwidgets import (Pivot, qrouter, ScrollArea, PrimaryPushSettingCard, 
                             OptionsValidator, OptionsConfigItem, ConfigSerializer, FolderValidator, TitleLabel,
                             FluentStyleSheet, FluentIconBase, IconWidget, isDarkTheme, drawIcon, ComboBox,
                             MessageBoxBase, SubtitleLabel, FlyoutViewBase, BodyLabel, ExpandLayout, setThemeColor,
-                            StyleSheetBase, TogglePushButton, TableWidget, SearchLineEdit, PrimaryToolButton,
+                            TogglePushButton, TableWidget, SearchLineEdit,
                             PrimaryToolButton, HorizontalPipsPager, PipsScrollButtonDisplayMode, PopupTeachingTip,
                             setCustomStyleSheet, FlowLayout, HorizontalFlipView, FlipImageDelegate, Dialog,
-                            HyperlinkCard, MSFluentWindow, NavigationItemPosition, setTheme, SplashScreen,
+                            HyperlinkCard, MSFluentWindow, NavigationItemPosition, setTheme, toggleTheme, SplashScreen,
                             TeachingTipTailPosition, CustomColorSettingCard, PushButton, ComboBoxSettingCard,
-                            ExpandSettingCard, ConfigValidator, ColorConfigItem, ElevatedCardWidget)
+                            ExpandSettingCard, ConfigValidator, ColorConfigItem, ElevatedCardWidget, EnumSerializer)
 
 
 __all__ = [
@@ -47,10 +47,10 @@ __all__ = [
     'OptionsValidator', 'OptionsConfigItem', 'ConfigSerializer', 'FolderValidator', 'TitleLabel',
     'FluentStyleSheet', 'FluentIconBase', 'IconWidget', 'isDarkTheme', 'drawIcon', 'ComboBox',
     'MessageBoxBase', 'SubtitleLabel', 'FlyoutViewBase', 'BodyLabel', 'ExpandLayout', 'setThemeColor',
-    'StyleSheetBase', 'TogglePushButton', 'TableWidget', 'SearchLineEdit', 'PrimaryToolButton',
+    'TogglePushButton', 'TableWidget', 'SearchLineEdit',
     'PrimaryToolButton', 'HorizontalPipsPager', 'PipsScrollButtonDisplayMode', 'PopupTeachingTip',
     'setCustomStyleSheet', 'FlowLayout', 'HorizontalFlipView', 'FlipImageDelegate', 'Dialog',
-    'HyperlinkCard', 'MSFluentWindow', 'NavigationItemPosition', 'setTheme', 'SplashScreen',
+    'HyperlinkCard', 'MSFluentWindow', 'NavigationItemPosition', 'setTheme', 'toggleTheme', 'SplashScreen',
     'TeachingTipTailPosition', 'CustomColorSettingCard', 'PushButton', 'ComboBoxSettingCard',
-    'ExpandSettingCard', 'ConfigValidator', 'ColorConfigItem', 'ElevatedCardWidget'
+    'ExpandSettingCard', 'ConfigValidator', 'ColorConfigItem', 'ElevatedCardWidget', 'EnumSerializer'
 ]

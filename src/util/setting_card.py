@@ -73,11 +73,11 @@ class SettingCard(ElevatedCardWidget):
         painter.setRenderHints(QPainter.Antialiasing)
 
         if isDarkTheme():
-            painter.setBrush(QColor(180, 210, 230, 40))
+            painter.setBrush(QColor(63, 52, 52, 50))  
             painter.setPen(QColor(0, 0, 0, 50))
         else:
-            painter.setBrush(QColor(230, 246, 255, 60))
-            painter.setPen(QColor(0, 0, 0, 19))
+            painter.setBrush(QColor(255, 238, 238, 50))
+            painter.setPen(QColor(0, 0, 0, 30))
 
         painter.drawRoundedRect(self.rect().adjusted(1, 1, -1, -1), 6, 6)
 

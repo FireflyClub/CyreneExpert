@@ -1,5 +1,5 @@
 from src.head import *
-from .validator import ExeValidator, ExeListValidator, StringValidator
+from .validator import StringValidator
 
 
 def Info(self, types, time, title, content=''):
@@ -58,23 +58,11 @@ class LanguageSerializer(ConfigSerializer):
 
 
 class Config(QConfig):
-    def __init__(self):
-        super().__init__()
-        self.file = Path("Config.json")
-        self._cfg.file = Path("Config.json")
-        self.themeColor.defaultValue = QColor("#FFC0CB")
-        self.set(self.themeColor, QColor("#FFC0CB"))
-        self.save()
-
     ############### CONFIG ITEMS ###############
-    dpiScale = OptionsConfigItem(
-        "Style", "DpiScale", "Auto", OptionsValidator([1, 1.25, 1.5, 1.75, 2, "Auto"]), restart=True)
-    language = OptionsConfigItem(
-        "Style", "Language", Language.ENGLISH, OptionsValidator(Language), LanguageSerializer(), restart=True)
-
-    currentGamePath = ConfigItem("Config", "CurrentGamePath", "", StringValidator())
-    gamePathList = ConfigItem("Config", "GamePathList", [], ExeListValidator())
-    fiddlerPath = ConfigItem("Config", "FiddlerPath", "", ExeValidator())
+    themeColor = ColorConfigItem("QFluentWidgets", "ThemeColor", '#FFC0CB')
+    dpiScale = OptionsConfigItem("Style", "DpiScale", "Auto", OptionsValidator([1, 1.25, 1.5, 1.75, 2, "Auto"]), restart=True)
+    language = OptionsConfigItem("Style", "Language", Language.ENGLISH, OptionsValidator(Language), LanguageSerializer(), restart=True)
+    targetUid = ConfigItem("Config", "TargetUid", "100001", StringValidator())
     autoCopy = ConfigItem("Config", "AutoCopy", True, BoolValidator())
 
     # usePRemote = ConfigItem("Remote", "usePRemote", False, BoolValidator())
@@ -86,6 +74,7 @@ class Config(QConfig):
 
     ############### APP INFO ###############
     ROOT = os.getcwd()
+    CONFIG_PATH = os.path.join(ROOT, 'Config.json')
     IMAGE = os.path.join(ROOT, 'data/image')
     ICON = os.path.join(ROOT, 'data/image/icon.ico')
     MYCOMMAND = os.path.join(ROOT, 'data/cmd/mycommand.txt')
@@ -102,7 +91,6 @@ class Config(QConfig):
     # ROUTE_CREMOTE = "/api/cremote"
 
     ############### LINK CONFIG ###############
-    URL_LATEST = "https://github.com/letheriver2007/Firefly-Launcher/releases/latest"
     URL_WRITER = "https://github.com/letheriver2007"
     URL_REPO = "https://github.com/letheriver2007/Firefly-Launcher"
     URL_RELEASES = "https://github.com/letheriver2007/Firefly-Launcher/releases"
@@ -110,4 +98,4 @@ class Config(QConfig):
 
 
 cfg = Config()
-# qconfig.load(cfg., cfg)
+qconfig.load(cfg.CONFIG_PATH, cfg)

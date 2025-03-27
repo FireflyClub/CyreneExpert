@@ -8,7 +8,6 @@ from qframelesswindow import FramelessWindow, StandardTitleBar
 from qfluentwidgets import (Pivot, qrouter, ScrollArea, PrimaryPushSettingCard, Theme,
                             BodyLabel, PrimaryPushButton, FluentIcon, setTheme,
                             ExpandGroupSettingCard, ComboBox, PrimaryToolButton, FluentTranslator)
-from src.util.style_sheet import StyleSheet
 from src.util.setting_card import SettingCardGroup
 from src.util.config import open_file, Info, cfg
 from devkit.convert import handleResConvert
@@ -234,7 +233,7 @@ class Devkit(ScrollArea):
         self.setWidgetResizable(True)
 
         self.scrollWidget.setObjectName('scrollWidget')
-        StyleSheet.SETTING_INTERFACE.apply(self)
+        FluentStyleSheet.NAVIGATION_INTERFACE.apply(self)
 
         self.__initLayout()
         self.__connectSignalToSlot()

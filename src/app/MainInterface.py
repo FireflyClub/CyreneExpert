@@ -18,9 +18,6 @@ class Main(MSFluentWindow):
         self.setWindowIcon(QIcon(cfg.ICON))
         self.handleCenterWindow()
 
-        setTheme(cfg.get(cfg.themeMode))
-        setThemeColor(cfg.get(cfg.themeColor))
-
         self.splashScreen = SplashScreen(self.windowIcon(), self)
         self.splashScreen.setIconSize(QSize(200, 200))
         self.splashScreen.raise_()
@@ -39,7 +36,7 @@ class Main(MSFluentWindow):
             routeKey='theme',
             icon=FluentIcon.CONSTRACT,
             text=self.tr('主题'),
-            onClick=self.handleThemeChanged,
+            onClick=lambda: toggleTheme(True, True),
             selectable=False,
             position=NavigationItemPosition.BOTTOM
         )
@@ -77,11 +74,5 @@ class Main(MSFluentWindow):
             Info(self, 'E', 3000, self.tr('检查字体失败: '), str(e))
 
         if not isSetupFont:
-            subprocess.run(f'cd {cfg.ROOT}/src/patch/font && start zh-cn.ttf', shell=True)
+            subprocess.run(f'cd {cfg.ROOT}/data/patch/font && start zh-cn.ttf', shell=True)
             sys.exit()
-
-    def handleThemeChanged(self):
-        new_theme = Theme.LIGHT if cfg.get(cfg.themeMode) == Theme.DARK else Theme.DARK
-        setTheme(new_theme)
-        cfg.set(cfg.themeMode, new_theme)
-        cfg.save() # Bug
