@@ -2,7 +2,7 @@
 __pycache__/
 dist/
 build/
-Firefly-Launcher/
+CyreneExpert/
 
 .idea/
 .vs/
@@ -10,16 +10,9 @@ Firefly-Launcher/
 .pytest_cache/
 venv/
 
-server/
-tool/
-temp/
-src/audio/
-
 devkit/data/output/
 devkit/translate/*.qm
 devkit/translate/*.ts
 
 Config.json
 mycommand.txt
-
-CustomRules_*.js

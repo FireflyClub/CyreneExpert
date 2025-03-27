@@ -1,10 +1,10 @@
-name: Build Firefly-Launcher
+name: Build CyreneExpert
 on:
   workflow_dispatch:
 
 jobs:
   build:
-    name: Build Firefly-Launcher
+    name: Build CyreneExpert
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -15,8 +15,8 @@ jobs:
             msvc_arch: x64
             qt_arch_install: msvc2019_64
     env:
-      targetName: Firefly-Launcher.exe
-      fileName: Firefly-Launcher
+      targetName: CyreneExpert.exe
+      fileName: CyreneExpert
     steps:
       - name: Check out repository
         uses: actions/checkout@v4.1.1
@@ -39,11 +39,11 @@ jobs:
           msvcArch: ${{ matrix.msvc_arch }}
         shell: pwsh
         run: |
-          pyinstaller -w -i ./src/image/icon.ico ./firefly-launcher.py -n Firefly-Launcher
-          xcopy /s /e /y src\image\ dist\Firefly-Launcher\src\image\
-          xcopy /s /e /y src\patch\ dist\Firefly-Launcher\src\patch\
-          xcopy /s /e /y src\data\ dist\Firefly-Launcher\src\data\
-          xcopy /s /e /y src\translate\ dist\Firefly-Launcher\src\translate\
+          pyinstaller -w -i ./data/image/icon.ico ./CyreneExpert.py -n CyreneExpert
+          xcopy /s /e /y data\cmd\ dist\CyreneExpert\data\cmd\
+          xcopy /s /e /y data\image\ dist\CyreneExpert\data\image\
+          xcopy /s /e /y data\font\ dist\CyreneExpert\data\font\
+          xcopy /s /e /y data\translate\ dist\CyreneExpert\data\translate\
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4.3.1
