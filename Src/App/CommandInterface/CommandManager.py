@@ -1,4 +1,4 @@
-from .Cmds import *
+from .Interface import *
 from Src.Util import *
 from Src.Import import *
 

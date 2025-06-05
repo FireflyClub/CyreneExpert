@@ -1,4 +1,4 @@
-from .AdminInterface import Admin
+from .Admin.AdminInterface import Admin
 from .CommonInterface import Common
 from .DataInterface import Data
 from .SceneInterface import Scene
