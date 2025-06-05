@@ -6,14 +6,14 @@ class Setting(ScrollArea):
     def __init__(self, text, parent=None):
         super().__init__(parent=parent)
         self.parent = parent
-        InitUI.initPivot(self, text)
+        # InitUI.initPivot(self, text)
 
         self.__initWidget()
         self.__initLayout()
         self.__connectSignalToSlot()
 
     def __initWidget(self):
-        self.PersonalInterface = SettingCardGroup(self.scrollWidget)
+        self.PersonalInterface = SettingCardGroup()
         self.themeColorCard = CustomColorSettingCard(
             CFG.themeColor,
             FluentIcon.PALETTE,
@@ -54,11 +54,11 @@ class Setting(ScrollArea):
         self.PersonalInterface.addSettingCard(self.autoCopyCard)
         self.PersonalInterface.addSettingCard(self.restartCard)
 
-        InitUI.addSubInterface(self, self.PersonalInterface, 'PersonalInterface', self.tr('程序'), icon=FluentIcon.SETTING)
+        # InitUI.addSubInterface(self, self.PersonalInterface, 'PersonalInterface', self.tr('程序'), icon=FluentIcon.SETTING)
         self.AboutInterface = About('AboutInterface', self)
-        InitUI.addSubInterface(self, self.AboutInterface, 'AboutInterface', self.tr('关于'), icon=FluentIcon.INFO)
+        # InitUI.addSubInterface(self, self.AboutInterface, 'AboutInterface', self.tr('关于'), icon=FluentIcon.INFO)
 
-        InitUI.initPivotLayout(self, self.PersonalInterface)
+        # InitUI.initPivotLayout(self, self.PersonalInterface)
 
     def __connectSignalToSlot(self):
         self.themeColorCard.colorChanged.connect(lambda c: setThemeColor(c, lazy=True))

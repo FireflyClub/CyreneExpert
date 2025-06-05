@@ -23,12 +23,13 @@ from qfluentwidgets import (Pivot, qrouter, ScrollArea, PrimaryPushSettingCard, 
                             OptionsValidator, OptionsConfigItem, ConfigSerializer, FolderValidator, TitleLabel,
                             FluentStyleSheet, FluentIconBase, IconWidget, isDarkTheme, drawIcon, ComboBox,
                             MessageBoxBase, SubtitleLabel, FlyoutViewBase, BodyLabel, ExpandLayout, setThemeColor,
-                            TogglePushButton, TableWidget, SearchLineEdit,
+                            TogglePushButton, TableWidget, SearchLineEdit, PopUpAniStackedWidget,
                             PrimaryToolButton, HorizontalPipsPager, PipsScrollButtonDisplayMode, PopupTeachingTip,
                             setCustomStyleSheet, FlowLayout, HorizontalFlipView, FlipImageDelegate, Dialog,
                             HyperlinkCard, MSFluentWindow, NavigationItemPosition, setTheme, toggleTheme, SplashScreen,
                             TeachingTipTailPosition, CustomColorSettingCard, PushButton, ComboBoxSettingCard,
-                            ExpandSettingCard, ConfigValidator, ColorConfigItem, ElevatedCardWidget, EnumSerializer)
+                            ExpandSettingCard, ConfigValidator, ColorConfigItem, ElevatedCardWidget, EnumSerializer,
+                            ExpandGroupSettingCard)
 
 
 __all__ = [
@@ -52,5 +53,6 @@ __all__ = [
     'setCustomStyleSheet', 'FlowLayout', 'HorizontalFlipView', 'FlipImageDelegate', 'Dialog',
     'HyperlinkCard', 'MSFluentWindow', 'NavigationItemPosition', 'setTheme', 'toggleTheme', 'SplashScreen',
     'TeachingTipTailPosition', 'CustomColorSettingCard', 'PushButton', 'ComboBoxSettingCard',
-    'ExpandSettingCard', 'ConfigValidator', 'ColorConfigItem', 'ElevatedCardWidget', 'EnumSerializer'
+    'ExpandSettingCard', 'ConfigValidator', 'ColorConfigItem', 'ElevatedCardWidget', 'EnumSerializer',
+    'ExpandGroupSettingCard', "PopUpAniStackedWidget"
 ]

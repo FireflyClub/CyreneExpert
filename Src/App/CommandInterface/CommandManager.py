@@ -6,15 +6,35 @@ from Src.Import import *
 class CommandManager(ScrollArea):
     def __init__(self, text, parent=None):
         super().__init__(parent=parent)
+        self.setObjectName(text)
         self.parent = parent
-        InitUI.initPivot(self, text)
+        FluentStyleSheet.NAVIGATION_INTERFACE.apply(self)
 
         self.__initWidget()
         self.__initLayout()
-        self.__initInfo()
         self.__connectSignalToSlot()
+        self.__initInfo()
 
     def __initWidget(self):
+        self.page = PivotPage(self)
+
+        self.AdminInterface = Admin(self)
+        self.CommonInterface = Common(self)
+        self.DataInterface = Data(self)
+        self.CustomInterface = Custom('CustomInterface', self)
+        self.SceneInterface = Scene('SceneInterface', self)
+        self.GiveInterface = Give('GiveInterface', self)
+        self.RelicInterface = Relic('RelicInterface', self)
+
+        self.page.addSubInterface(self.AdminInterface, 'AdminInterface', self.tr('管理'), icon=FluentIcon.COMMAND_PROMPT)
+        self.page.addSubInterface(self.CommonInterface, 'CommonInterface', self.tr('常用'), icon=FluentIcon.COMMAND_PROMPT)
+        self.page.addSubInterface(self.DataInterface, 'DataInterface', self.tr('数据'), icon=FluentIcon.COMMAND_PROMPT)
+        self.page.addSubInterface(self.CustomInterface, 'CustomInterface', self.tr('自定义'), icon=FluentIcon.COMMAND_PROMPT)
+        self.page.addSubInterface(self.SceneInterface, 'SceneInterface', self.tr('场景'), icon=FluentIcon.COMMAND_PROMPT)
+        self.page.addSubInterface(self.GiveInterface, 'GiveInterface', self.tr('给予'), icon=FluentIcon.COMMAND_PROMPT)
+        self.page.addSubInterface(self.RelicInterface, 'RelicInterface', self.tr('遗器'), icon=FluentIcon.COMMAND_PROMPT)
+        self.page.setCurrentPage("AdminInterface")
+
         self.updateText = LineEdit()
         self.updateText.setFixedSize(800, 35)
 
@@ -33,30 +53,8 @@ class CommandManager(ScrollArea):
         self.saveButton.setFixedSize(35, 35)
 
     def __initLayout(self):
-        self.AdminInterface = Admin(self.scrollWidget)
-        InitUI.addSubInterface(self, self.AdminInterface, 'AdminInterface', self.tr('管理'), icon=FluentIcon.COMMAND_PROMPT)
-
-        self.CommonInterface = Common(self.scrollWidget)
-        InitUI.addSubInterface(self, self.CommonInterface, 'CommonInterface', self.tr('常用'), icon=FluentIcon.COMMAND_PROMPT)
-
-        self.DataInterface = Data(self.scrollWidget)
-        InitUI.addSubInterface(self, self.DataInterface, 'DataInterface', self.tr('数据'), icon=FluentIcon.COMMAND_PROMPT)
-
-        self.CustomInterface = Custom('CustomInterface', self)
-        InitUI.addSubInterface(self, self.CustomInterface, 'CustomInterface', self.tr('自定义'), icon=FluentIcon.COMMAND_PROMPT)
-
-        self.SceneInterface = Scene('SceneInterface', self)
-        InitUI.addSubInterface(self, self.SceneInterface, 'SceneInterface', self.tr('场景'), icon=FluentIcon.COMMAND_PROMPT)
-
-        self.GiveInterface = Give('GiveInterface', self)
-        InitUI.addSubInterface(self, self.GiveInterface, 'GiveInterface', self.tr('给予'), icon=FluentIcon.COMMAND_PROMPT)
-
-        self.RelicInterface = Relic('RelicInterface', self)
-        InitUI.addSubInterface(self, self.RelicInterface, 'RelicInterface', self.tr('遗器'), icon=FluentIcon.COMMAND_PROMPT)
-
-        InitUI.initPivotLayout(self, self.AdminInterface)
-
         self.updateLayout = QHBoxLayout()
+        self.updateLayout.addSpacing(15)
         self.updateLayout.addWidget(self.updateText, alignment=Qt.AlignCenter)
         self.updateLayout.addStretch(1)
         self.updateLayout.addWidget(self.uidText, alignment=Qt.AlignCenter)
@@ -68,8 +66,13 @@ class CommandManager(ScrollArea):
         self.updateLayout.addWidget(self.actionButton, alignment=Qt.AlignCenter)
         self.updateLayout.addSpacing(5)
         self.updateLayout.addWidget(self.saveButton, alignment=Qt.AlignCenter)
-        self.updateLayout.addSpacing(15)
+        self.updateLayout.addSpacing(20)
+
+        self.vBoxLayout = QVBoxLayout()
+        self.vBoxLayout.addWidget(self.page)
         self.vBoxLayout.addLayout(self.updateLayout)
+        self.vBoxLayout.addSpacing(15)
+        self.setLayout(self.vBoxLayout)
 
     def __initInfo(self):
         self.uidText.setText(CFG.get(CFG.targetUid))

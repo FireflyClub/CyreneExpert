@@ -42,8 +42,8 @@ class Main(MSFluentWindow):
         )
 
         self.settingInterface = Setting('SettingInterface', self)
-        self.addSubInterface(self.settingInterface, FluentIcon.SETTING, self.tr('设置'), FluentIcon.SETTING,
-                             NavigationItemPosition.BOTTOM)
+        # self.addSubInterface(self.settingInterface, FluentIcon.SETTING, self.tr('设置'), FluentIcon.SETTING,
+        #                      NavigationItemPosition.BOTTOM)
 
     def handleCenterWindow(self):
         desktop = QApplication.screens()[0].availableGeometry()

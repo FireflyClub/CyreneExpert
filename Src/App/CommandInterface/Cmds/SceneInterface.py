@@ -2,7 +2,7 @@ from Src.Import import *
 from Src.Util import *
 
 
-class Scene(QWidget):
+class Scene(ScrollArea):
     command_update = Signal(str)
 
     def __init__(self, text: str, parent=None):

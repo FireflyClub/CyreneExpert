@@ -16,29 +16,43 @@ class Announce(SettingCard):
         pass
 
 
-class Account(SettingCard):
+class Account(ExpandGroupSettingCard):
     create_account = Signal()
     delete_account = Signal()
 
-    def __init__(self, title, icon=FluentIcon.TAG, content='/account {create | delete} [username]'):
-        super().__init__(icon, title, content)
-        self.account_name = LineEdit(self)
-        self.account_uid = LineEdit(self)
-        self.button_create = PrimaryPushButton(self.tr('添加'), self)
-        self.button_delete = PrimaryPushButton(self.tr('删除'), self)
-        self.account_name.setPlaceholderText(self.tr("名称"))
-        self.account_uid.setPlaceholderText("UID")
-        self.account_uid.setValidator(QIntValidator(self))
-        self.hBoxLayout.addWidget(self.account_name, 0, Qt.AlignRight)
-        self.hBoxLayout.addSpacing(10)
-        self.hBoxLayout.addWidget(self.account_uid, 0, Qt.AlignRight)
-        self.hBoxLayout.addSpacing(10)
-        self.hBoxLayout.addWidget(self.button_create, 0, Qt.AlignRight)
-        self.hBoxLayout.addSpacing(10)
-        self.hBoxLayout.addWidget(self.button_delete, 0, Qt.AlignRight)
-        self.hBoxLayout.addSpacing(16)
-        self.button_create.clicked.connect(self.create_account)
-        self.button_delete.clicked.connect(self.delete_account)
+    def __init__(self):
+        self.title = self.tr('管理账号')
+        self.content = '/account {create | delete} [username]'
+        self.icon = FluentIcon.TAG
+        super().__init__(self.icon, self.title, self.content)
+
+        self.account = LineEdit(self)
+        self.name_label = BodyLabel(self.tr("名称"))
+        self.name_label.setFixedWidth(135)
+        self.add(self.name_label, self.account)
+
+        self.uid = LineEdit(self)
+        self.uid_label = BodyLabel(self.tr("UID"))
+        self.uid_label.setFixedWidth(135)
+        self.add(self.uid_label, self.uid)
+
+        self.password = LineEdit(self)
+        self.pwd_label = BodyLabel(self.tr("密码"))
+        self.pwd_label.setFixedWidth(135)
+        self.add(self.pwd_label, self.password)
+
+    def add(self, label, widget):
+        w = QWidget()
+        w.setFixedHeight(60)
+
+        layout = QHBoxLayout(w)
+        layout.setContentsMargins(48, 12, 48, 12)
+
+        layout.addWidget(label)
+        layout.addStretch(1)
+        layout.addWidget(widget)
+
+        self.addGroupWidget(w)
 
 
 class Permission(SettingCard):
@@ -94,9 +108,7 @@ class Admin(SettingCardGroup):
         self.__connectSignalToSlot()
 
     def __initWidget(self):
-        self.accountCard = Account(
-            self.tr('管理账号')
-        )
+        self.accountCard = Account()
         self.permissionCard = Permission(
             self.tr('管理权限')
         )
